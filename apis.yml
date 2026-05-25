@@ -1,0 +1,82 @@
+aid: skyscanner
+name: Skyscanner
+description: >-
+  Skyscanner is an Edinburgh, Scotland–headquartered global travel
+  marketplace that helps travellers compare flights, hotels, and car hire
+  across hundreds of airlines, hotel providers, and online travel agents.
+  Founded in 2003 and acquired by Trip.com Group (formerly Ctrip) in 2016,
+  Skyscanner operates the consumer site skyscanner.net and a B2B partner
+  programme that powers travel search experiences for third-party
+  publishers and apps. The Skyscanner Travel APIs — Flights Live Prices,
+  Flights Indicative Prices, Hotels Live Prices, Hotels Indicative Prices,
+  Hotels Content, Hotels Reviews, Car Hire Live Prices, Car Hire
+  Indicative Prices, Car Hire Agents, plus utility services for Culture,
+  Geo, Autosuggest, and Carriers — are gated behind a partner application
+  process and exposed only to approved partners with significant audience
+  scale; full API documentation, base URLs, and OpenAPI specifications
+  are published inside the partner portal rather than on the public
+  developer site. Alongside the Travel APIs, Skyscanner runs an
+  Affiliate Programme (commission on referred bookings) and a
+  Distribution Network connecting airlines, hotel providers, car-hire
+  suppliers, and OTAs to its 160M+ monthly users. Its public GitHub
+  organisation is best known for the Backpack design system and for
+  open-source infrastructure tooling such as cfripper and turbolift,
+  rather than for SDKs against the Travel APIs.
+type: Index
+position: Provider
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Travel
+  - Travel Search
+  - Flights
+  - Hotels
+  - Car Hire
+  - Metasearch
+  - Affiliate
+  - Distribution
+  - Online Travel Agency
+  - Trip.com Group
+url: https://raw.githubusercontent.com/api-evangelist/skyscanner/refs/heads/main/apis.yml
+created: '2026-05-25'
+modified: '2026-05-25'
+specificationVersion: '0.20'
+apis: []
+common:
+  - type: Website
+    url: https://www.skyscanner.net
+  - type: Partners
+    url: https://www.partners.skyscanner.net/
+  - type: TravelAPI
+    url: https://www.partners.skyscanner.net/product/travel-api
+  - type: AffiliateProgramme
+    url: https://www.partners.skyscanner.net/product/affiliates
+  - type: DistributionNetwork
+    url: https://www.partners.skyscanner.net/product/distribution
+  - type: DeveloperDocs
+    url: https://developers.skyscanner.net/docs/intro
+  - type: ApplyForTravelAPI
+    url: https://www.partners.skyscanner.net/contact/travel-api
+  - type: SupportPortal
+    url: https://skyscannerpartnersupport.zendesk.com/hc/en-us/
+  - type: SelfServeHelpCentre
+    url: https://www.partners.skyscanner.net/self-serve-help-centre
+  - type: GitHub
+    url: https://github.com/Skyscanner
+  - type: EngineeringPrinciples
+    url: https://github.com/Skyscanner/engineering-principles
+  - type: Backpack
+    url: https://backpack.github.io/
+  - type: Company
+    url: https://www.skyscanner.net/media
+  - type: Careers
+    url: https://www.skyscanner.net/jobs
+  - type: ParentCompany
+    url: https://www.trip.com/
+  - type: Twitter
+    url: https://twitter.com/Skyscanner
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/skyscanner
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
