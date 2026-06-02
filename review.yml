@@ -1,0 +1,141 @@
+aid: skyscanner
+reviewed: '2026-05-30'
+reviewer: API Evangelist
+scope: AsyncAPI streaming / webhook surface assessment
+summary: >-
+  Skyscanner does not expose a documented public streaming or webhook
+  surface suitable for AsyncAPI modeling. The Skyscanner Travel APIs
+  (Flights / Hotels / Car Hire Live Prices, Indicative Prices, Content,
+  Reviews, Agents, plus Culture, Geo, Autosuggest, and Carriers) are
+  partner-gated and exposed only to approved partners through the
+  Skyscanner Partners portal; full API reference material, base URLs,
+  authentication details, and any private webhook or event mechanics
+  live behind that gate. The portions of the developer documentation
+  that are publicly reachable
+  (https://developers.skyscanner.net/docs/intro and the
+  getting-started "create and poll" guide) describe a synchronous
+  request/response and client-side polling model. No public webhook
+  subscription, Server-Sent Events feed, WebSocket channel, MQTT/AMQP/
+  Kafka binding, or push-notification endpoint is documented on the
+  public developer site or in the Skyscanner Partner Support knowledge
+  base.
+streaming:
+  hasPublicStreamingSurface: false
+  asyncApiModelable: false
+  reason: >-
+    The documented Skyscanner integration pattern for "live" prices is
+    a synchronous create-then-poll workflow: the client calls a
+    /create endpoint to open a pricing session, receives a session
+    token, and then repeatedly calls /poll until the response Status
+    is UpdatesComplete. This is client-driven polling over HTTPS, not
+    server push, not long-polling streaming, and not an event
+    subscription that AsyncAPI is designed to describe. The deeper
+    per-product reference pages (e.g.
+    https://developers.skyscanner.net/docs/flights-live-prices/intro)
+    return HTTP 403 to unauthenticated requests, confirming that any
+    additional async mechanics, if they exist, are partner-gated and
+    not part of a public contract that can be modeled without
+    fabrication.
+surfaces:
+  - name: Skyscanner Travel APIs (Live Prices family)
+    transport: HTTPS REST with client-driven polling
+    public: false
+    partnerGated: true
+    asyncApiBindingAvailable: false
+    notes: >-
+      Flights Live Prices, Hotels Live Prices, and Car Hire Live
+      Prices use a /create + /poll session model. The first call
+      opens a pricing session against Skyscanner's supplier network;
+      the client then polls the session with the returned session
+      token until Status == UpdatesComplete. "Refresh Prices" follows
+      the same synchronous pattern. There is no documented push,
+      stream, or subscription transport - the asynchrony is entirely
+      in the supplier fan-out behind Skyscanner, exposed to clients
+      only as repeated synchronous polls.
+    references:
+      - https://developers.skyscanner.net/docs/getting-started/create-and-poll
+      - https://developers.skyscanner.net/docs/flights-live-prices/overview
+      - https://developers.skyscanner.net/docs/flights-live-prices/refresh-prices
+      - https://developers.skyscanner.net/docs/flights-live-prices/quick-start
+  - name: Skyscanner Travel APIs (Indicative Prices, Content, Reviews, Agents, Utility)
+    transport: HTTPS REST
+    public: false
+    partnerGated: true
+    asyncApiBindingAvailable: false
+    notes: >-
+      Flights / Hotels / Car Hire Indicative Prices, Hotels Content
+      Info, Hotels Reviews, Car Hire Agents, plus the utility
+      services Geo, Culture, Carriers, and Autosuggest are documented
+      as standard request/response REST resources. No streaming,
+      webhook, or event-bus binding is referenced for any of them in
+      the publicly reachable developer documentation.
+    references:
+      - https://developers.skyscanner.net/docs/intro
+      - https://developers.skyscanner.net/
+  - name: Webhooks / event subscriptions
+    transport: None documented publicly
+    public: false
+    partnerGated: unknown
+    asyncApiBindingAvailable: false
+    notes: >-
+      No public webhook registration, callback URL configuration,
+      event topic catalog, or subscription management API is
+      documented on developers.skyscanner.net, on the Skyscanner
+      Partners site, or in the Skyscanner Partner Support Zendesk
+      knowledge base for the Travel APIs. If any partner-internal
+      webhook or async notification mechanism exists, it is gated
+      behind the partner application/approval process and the partner
+      portal, and is not part of a public contract that can be
+      modeled without access.
+    references:
+      - https://www.partners.skyscanner.net/product/travel-api
+      - https://www.partners.skyscanner.net/contact/travel-api
+      - https://skyscannerpartnersupport.zendesk.com/hc/en-us/sections/4524598474781-Travel-APIs-Getting-started
+  - name: Affiliate Programme and Distribution Network
+    transport: Web links / commercial integration, not an event API
+    public: true
+    partnerGated: partial
+    asyncApiBindingAvailable: false
+    notes: >-
+      The Skyscanner Affiliate Programme and Distribution Network are
+      commercial / referral products (deep links, redirect tracking,
+      supplier distribution agreements). They are not documented as
+      event-driven or streaming APIs and do not expose an AsyncAPI-
+      modelable channel.
+    references:
+      - https://www.partners.skyscanner.net/product/affiliates
+      - https://www.partners.skyscanner.net/product/distribution
+decisions:
+  - action: Do not create an AsyncAPI specification for Skyscanner
+    rationale: >-
+      AsyncAPI requires a provider-owned asynchronous transport
+      (WebSocket, SSE, Kafka, MQTT, AMQP, webhook, etc.) with a
+      documented contract. Skyscanner's publicly documented surface
+      is synchronous REST with client-driven create-and-poll
+      sessions, and the deeper reference material is partner-gated.
+      Authoring an AsyncAPI document from this evidence would
+      require fabrication of channels, messages, and bindings that
+      Skyscanner has not published.
+  - action: Do not create an OpenAPI specification at this time
+    rationale: >-
+      The detailed per-endpoint REST reference (paths, parameters,
+      schemas, base URLs, auth scheme) for the Skyscanner Travel
+      APIs is gated behind partner approval. Reconstructing an
+      OpenAPI document from public summaries alone would risk
+      inventing endpoint shapes. Defer until partner access is
+      available or Skyscanner publishes a machine-readable spec.
+  - action: Leave apis.yml apis[] empty and bump modified date
+    rationale: >-
+      The existing apis.yml already catalogs Skyscanner accurately as
+      a partner-gated provider with no machine-readable specification
+      attached. This review adds no new spec artifacts, so apis[]
+      stays empty; the modified date is bumped to record that the
+      streaming/webhook surface was reviewed on 2026-05-30.
+notes: >-
+  Revisit if Skyscanner publishes a first-party asynchronous surface
+  for partners on the public developer site - for example, a webhook
+  for pricing-session completion or booking-state changes, an SSE or
+  WebSocket feed for live price updates that removes the client poll
+  loop, or a partner event bus for supplier inventory changes - or if
+  partner access is obtained and the gated reference material reveals
+  documented async mechanics that can be modeled without fabrication.
