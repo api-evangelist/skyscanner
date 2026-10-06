@@ -72,10 +72,12 @@ tags_raw:
   - Trip.com Group
 url: https://raw.githubusercontent.com/api-evangelist/skyscanner/refs/heads/main/apis.yml
 created: '2026-05-25'
-modified: '2026-05-30'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis: []
 common:
+  - url: https://www.skyscanner.com/blog
+    type: Blog
   - type: VulnerabilityDisclosure
     url: security/skyscanner-vulnerability-disclosure.yml
   - type: DomainSecurity
